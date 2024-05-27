@@ -37,10 +37,10 @@ def insert_webpage(request):
             url =WFDO.cleaned_data['url']
             email = WFDO.cleaned_data['email']
             
-            WO = Webpage.objects.get_or_create(topic_name = tn,name=name,url=url,email=email)[0]
-            WO.save()
+            #WO = Webpage.objects.get_or_create(topic_name = tn,name=name,url=url,email=email)[0]
+           # WO.save()
 
-            return HttpResponse('Webpage Inserted Successfully')
+            return HttpResponse(str(WFDO.cleaned_data)) #{'topic_name': , 'name': 'NagaPrathap', 'url': None, 'email': 'prashanth@gmail.com', 'reemail': 'prashanth@gmail.com'}
         else:
             return HttpResponse('Invalid Data')
     return render(request, 'insert_webpage.html',d)
