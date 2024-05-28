@@ -3,6 +3,7 @@ from django import forms
 
 from app.models import *
 
+from django.core import validators
 
 
 # #Creating Validations for Topic Form 
@@ -37,6 +38,16 @@ def date_validate(value):
 
 class TopicForm(forms.Form):
     topic_name = forms.CharField(validators=[validate_for_a,validate_len]) #this is the name shown in fornt end in TitleCase
+    #built in validators --import validators from django.core.validators 
+
+    # if mobile numbers contains 10 digits and starts with 6,7,8,9  and data should be len greater than 5 and not more than 10 then allow to add topic into database
+    #mobile and data are for only validation purpose we are not adding these data into database
+    #MinLength,MaxLength,ValidateEmail,ValidateUrl -->some built-in validators
+
+    mobile = forms.CharField(max_length=10,min_length=10,validators=[validators.RegexValidator('[6-9]\d{9}')])
+
+    data = forms.CharField(validators=[validators.MinLengthValidator(5),validators.MaxLengthValidator(10)])
+    #email = forms.CharField(validators=[validators.validate_email()])
 
 
 class WebpageForm(forms.Form):
@@ -77,3 +88,7 @@ class AccessRecordForm(forms.Form):
     name=forms.ModelChoiceField(queryset= Webpage.objects.all() ) #    Queryset =Webpage.objects.all()
     date=forms.DateField(validators=[date_validate])
     author=forms.CharField(max_length=100,validators=[validate_len])
+
+
+# built in ,normal forms --> models (fields  created here)
+#Form object methods -->modelForms -- inside main class, outside sub class 

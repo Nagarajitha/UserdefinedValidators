@@ -17,7 +17,7 @@ def insert_topic(request):
             TO = Topic.objects.get_or_create(topic_name = tn)[0]
             TO.save()
 
-            return HttpResponse('Topic Inserted Successfully')
+            return HttpResponse(str(TFDO.cleaned_data))
         else:
             return HttpResponse('Invalid Data')
     return render(request, 'insert_topic.html',d)
